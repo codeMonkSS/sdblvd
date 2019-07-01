@@ -37,7 +37,9 @@ export default {
   name: 'DishData',
   // add vue data indicator for loading state
   data() {
-    return { meal: undefined }
+    return {
+      meal: undefined,
+    };
   },
   mounted() {
     const self = this;
@@ -47,7 +49,7 @@ export default {
       self.meal = session.dish;
     } else {
       // suggest start a new session
-      this.generateNewDish()
+      this.generateNewDish();
     }
   },
   computed: mapState([
@@ -56,9 +58,9 @@ export default {
   methods: {
     extractIngredients: (meal) => {
       const ingredients = [];
-      for(let prop in meal) {
-        if(prop.match('strIngredient')) {
-          if(meal[prop] && meal[prop].trim() != "") {
+      for (let prop in meal) {
+        if (prop.match('strIngredient')) {
+          if (meal[prop] && meal[prop].trim() != '') {
             ingredients.push(meal[prop]);
           }
         }
@@ -76,15 +78,14 @@ export default {
 
     getSession() {
       let data = JSON.parse(localStorage.getItem('Sundown'));
-      if(data) {
-        if(this.$store.state.email) {
+      if (data) {
+        if (this.$store.state.email) {
           return data.sessions.filter(i => i.id == this.$store.state.email)[0];
-        }else {
-          return data.sessions.filter(i => i.id == 'new')[0];
         }
+        return data.sessions.filter(i => i.id == 'new')[0];
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

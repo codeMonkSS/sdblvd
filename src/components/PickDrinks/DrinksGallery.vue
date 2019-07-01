@@ -58,10 +58,10 @@ export default {
     }).catch(err => console.log(err));
 
     const session = this.getSession();
-    if(session) {
+    if (session) {
       console.log(session);
-      if(session.drinks && session.drinks.length > 0) {
-        for(let i = 0; i < session.drinks.length; i++) {
+      if (session.drinks && session.drinks.length > 0) {
+        for (let i = 0; i < session.drinks.length; i++) {
           self.selectedDrinks.push(session.drinks[i].id);
         }
       }
@@ -85,8 +85,9 @@ export default {
       this.selectedDrinks.splice(this.selectedDrinks.indexOf(drink.id), 1);
       console.log('removed drink', drink.name);
     },
+    // eslint-disable-next-line consistent-return
     getSession() {
-      let data = JSON.parse(localStorage.getItem('Sundown'));
+      const data = JSON.parse(localStorage.getItem('Sundown'));
       if (data) {
         if (this.$store.state.email) {
           console.log('if here');

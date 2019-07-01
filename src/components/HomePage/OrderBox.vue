@@ -2,13 +2,25 @@
   <div class="order-box">
     <h1>Order flow box</h1>
     <img src="../../assets/food.svg" alt="Order flow box" />
-    <router-link class="btn btn-ghost" to="/PickDish">Order</router-link>
+    <button class="btn btn-ghost" @click="newOrder">Order</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'OrderBox',
+  data() {
+    return {};
+  },
+  methods: {
+    newOrder() {
+      const data = JSON.parse(localStorage.getItem('Sundown'));
+      this.$router.push('/PickDish');
+      const newData = data.sessions.filter(i => i.id == 'new')[0];
+      console.log('new order');
+      return newData;
+    },
+  },
 };
 </script>
 

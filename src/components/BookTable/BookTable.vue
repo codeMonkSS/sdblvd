@@ -28,7 +28,7 @@
       <input v-model="email" type="email" id="newUserEmail"
              class="new-user-email" placeholder="Enter your email"
              :class="{ 'error': emailError }"/>
-      <button v-on:click="submit" class="btn btn-danger">Order</button>
+      <button v-on:click="submit" class="btn btn-danger">{{ confirmButtonText }}</button>
     </div>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
       dateTimeError: false,
       dateTimeFormat: 'DD-MM-YYYY HH:mm',
       emailError: false,
+      confirmButtonText: '',
     };
   },
   methods: {
@@ -88,10 +89,18 @@ export default {
     // eslint-disable-next-line consistent-return
     getSession() {
       const data = JSON.parse(localStorage.getItem('Sundown'));
+      console.log('BookTable', (data.sessions.filter(i => i.id === this.$store.state.email)[0]));
       if (data) {
         if (this.$store.state.email) {
+          console.log('to update an order');
+          const thisSession = (data.sessions.filter(i => i.id === this.$store.state.email)[0]);
+          this.datetime = thisSession.time;
+          this.email = thisSession.id; // this is the session's email
+          this.confirmButtonText = 'Update';
           return data.sessions.filter(i => i.id === this.$store.state.email)[0];
         }
+        console.log('to create new order');
+        this.confirmButtonText = 'Order';
         return data.sessions.filter(i => i.id === 'new')[0];
       }
     },
