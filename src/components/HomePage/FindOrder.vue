@@ -36,7 +36,7 @@ export default {
       }
       const data = JSON.parse(localStorage.getItem(this.$store.state.sessionName));
       if (data) {
-        console.log(data.sessions);
+        console.log(JSON.stringify(data.sessions));
         if (data.sessions.filter(i => i.id == this.email)[0]) {
           console.log('order found');
           this.$store.state.email = this.email;
