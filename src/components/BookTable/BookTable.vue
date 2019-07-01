@@ -253,6 +253,12 @@ export default {
 }
 .date-time-picker {
   max-width: 37vw;
+  @media (max-width: 1000px) {
+    max-width: 60vw;
+  }
+  @media (max-width: 800px) {
+    max-width: 80vw;
+  }
   .field-input {
     padding: 0 20px;
     text-align: center;
