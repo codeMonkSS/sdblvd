@@ -264,14 +264,18 @@ export default {
     text-align: center;
     font-size: 26px;
     height: 50px;
+    @media (max-width: 800px) {
+      font-size: 20px;
+    }
   }
   &.error .field-input {
     border: 1px solid #ba2329;
   }
 }
 .datetimepicker .datepicker {
-  width: 100% !important;
-  max-width: 100% !important;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .time-picker-column-item.disabled {
   display: none;
