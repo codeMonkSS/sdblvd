@@ -73,7 +73,9 @@ export default {
       return moment();
     },
     submit() {
+      // eslint-disable-next-line
       (this.datetime == '') ? this.dateTimeError = true : this.dateTimeError = false;
+      // eslint-disable-next-line
       (this.email == '') ? this.emailError = true : this.emailError = false;
       if (this.counter > 0 && this.datetime !== '' && this.email !== '') {
         this.$store.commit('saveSession', { email: this.email });

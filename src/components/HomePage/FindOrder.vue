@@ -9,7 +9,10 @@
       <input type="email" placeholder="Enter your email" v-model="email" />
       <button class="btn btn-primary" @click="findOrder">Find</button>
     </div>
-    <div class="error-order" v-for="error in errorText">
+    <div
+      class="error-order"
+      v-for="(error, pro) in errorText"
+      :key="pro">
       <p v-if="errorFindOrder">{{ error }}</p>
     </div>
   </div>
@@ -27,6 +30,7 @@ export default {
     };
   },
   methods: {
+    // eslint-disable-next-line
     findOrder() {
       this.errorText = [];
       if ((this.email === '') || !(this.reg.test(this.email))) {
@@ -36,11 +40,12 @@ export default {
       }
       const data = JSON.parse(localStorage.getItem(this.$store.state.sessionName));
       if (data) {
-        console.log(JSON.stringify(data.sessions));
+        console.log(data.sessions);
+        // eslint-disable-next-line
         if (data.sessions.filter(i => i.id == this.email)[0]) {
           console.log('order found');
           this.$store.state.email = this.email;
-          this.$router.push('/Receipt');
+          this.$router.push('/PickDish');
         } else {
           // not found
           console.log('no order found');
@@ -52,7 +57,7 @@ export default {
         this.errorFindOrder = true;
         this.errorText.push('No order found.');
       }
-    }
+    },
   },
 };
 </script>
