@@ -43,8 +43,10 @@ export default {
         console.log(data.sessions);
         // eslint-disable-next-line
         if (data.sessions.filter(i => i.id == this.email)[0]) {
-          console.log('order found', data.sessions.filter(i => i.id === this.$store.state.email)[0]);
-          this.$store.state.email = this.email;
+          console.log('order found');
+          // email session check
+          this.$store.commit('startEmailSession', { email: this.email })
+          // this.$store.state.email = this.email;
           this.$router.push('/PickDish');
         } else {
           // not found

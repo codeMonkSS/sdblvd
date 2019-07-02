@@ -28,7 +28,7 @@
       <input v-model="email" type="email" id="newUserEmail"
              class="new-user-email" placeholder="Enter your email"
              :class="{ 'error': emailError }"/>
-      <button v-on:click="submit" class="btn btn-danger">{{ confirmButtonText }}</button>
+      <button v-on:click="submit" class="btn btn-danger">{{ orderButtonLable }}</button>
     </div>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
   name: 'BookTable',
   data() {
     return {
+      orderButtonLable: '',
       datetime: '',
       counter: 4,
       pluralCount: true,
@@ -52,7 +53,6 @@ export default {
       dateTimeError: false,
       dateTimeFormat: 'DD-MM-YYYY HH:mm',
       emailError: false,
-      confirmButtonText: '',
     };
   },
   methods: {
@@ -79,6 +79,7 @@ export default {
       // eslint-disable-next-line
       (this.email == '') ? this.emailError = true : this.emailError = false;
       if (this.counter > 0 && this.datetime !== '' && this.email !== '') {
+        this.$store.commit('updateSession', { guests: this.counter } );
         this.$store.commit('saveSession', { email: this.email });
         this.$store.state.email = this.email;
         this.$router.push('/Receipt');
@@ -91,17 +92,13 @@ export default {
       const data = JSON.parse(localStorage.getItem('Sundown'));
       console.log('BookTable', (data.sessions.filter(i => i.id === this.$store.state.email)[0]));
       if (data) {
-        if (this.$store.state.email) {
-          console.log('to update an order');
-          const thisSession = (data.sessions.filter(i => i.id === this.$store.state.email)[0]);
-          this.datetime = thisSession.time;
-          this.email = thisSession.id; // this is the session's email
-          this.confirmButtonText = 'Update';
-          return data.sessions.filter(i => i.id === this.$store.state.email)[0];
+        if (localStorage.getItem('EmailSession')) {
+          this.orderButtonLable = 'Update Order';
+          return data.sessions.filter(i => i.id === localStorage.getItem('EmailSession'))[0];
+        } else {
+          this.orderButtonLable = 'Create Order';
+          return data.sessions.filter(i => i.id === 'new')[0];
         }
-        console.log('to create new order');
-        this.confirmButtonText = 'Order';
-        return data.sessions.filter(i => i.id === 'new')[0];
       }
     },
   },
@@ -119,6 +116,15 @@ export default {
       if (session.drinks) {
         if (session.drinks.length < 1) {
           this.$router.push('/PickDrinks');
+        } else {
+          // this.datetime = session.time;
+          // this.counter = session.guests;
+          // this.email = session.id;
+          if (session.time !== null && session.guests !== null && session.id === localStorage.getItem('EmailSession')) {
+            this.datetime = session.time;
+            this.counter = session.guests;
+            this.email = session.id;
+          }
         }
       } else {
         this.$router.push('/PickDrinks');

@@ -24,7 +24,7 @@
       </ol>
       <h4 class="text-uppercase">Booking Details</h4>
       <h4><span>Date and Time:</span> {{ session.time }}</h4>
-      <h5><span>Amount:</span> $34.75</h5>
+      <h5><span>Amount:</span> {{ session.guests }} Guest(s)</h5>
       <h5><span>Email:</span> {{ session.id }}</h5>
     </div>
   </div>

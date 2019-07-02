@@ -78,20 +78,34 @@ export default {
     addDrink(drink) {
       this.$store.commit('updateSession', { add: drink });
       this.selectedDrinks.push(drink.id);
-      console.log('added drink', drink.name);
+      console.log('added drink', this.selectedDrinks);
     },
     removeDrink(drink) {
-      this.$store.commit('updateSession', { remove: drink });
+      this.$store.commit('updateSession', { remove: drink.id });
       this.selectedDrinks.splice(this.selectedDrinks.indexOf(drink.id), 1);
-      console.log('removed drink', drink.name);
+      console.log('removed drink', this.selectedDrinks);
     },
-    // eslint-disable-next-line consistent-return
+    // getSession() {
+    //   let data = JSON.parse(localStorage.getItem('Sundown'));
+    //   if (data) {
+    //     if (this.$store.state.email) {
+    //       console.log('if here');
+    //       return data.sessions.filter(i => i.id == this.$store.state.email)[0];
+    //     } else {
+    //       console.log('else mid');
+    //       return data.sessions.filter(i => i.id == 'new')[0];
+    //     }
+    //   } else {
+    //     console.log('else last');
+    //     this.$router.push('/');
+    //   }
+    // },
     getSession() {
-      const data = JSON.parse(localStorage.getItem('Sundown'));
+      let data = JSON.parse(localStorage.getItem('Sundown'));
       if (data) {
-        if (this.$store.state.email) {
+        if (localStorage.getItem('EmailSession')) {
           console.log('if here');
-          return data.sessions.filter(i => i.id == this.$store.state.email)[0];
+          return data.sessions.filter(i => i.id == localStorage.getItem('EmailSession'))[0];
         } else {
           console.log('else mid');
           return data.sessions.filter(i => i.id == 'new')[0];

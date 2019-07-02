@@ -43,6 +43,8 @@ export default {
   },
   mounted() {
     const self = this;
+    // email session check
+    // localStorage.setItem('EmailSession','k@gmail.com')
     // get current session
     const session = this.getSession();
     if(session) {
@@ -78,11 +80,12 @@ export default {
 
     getSession() {
       let data = JSON.parse(localStorage.getItem('Sundown'));
-      if (data) {
-        if (this.$store.state.email) {
-          return data.sessions.filter(i => i.id == this.$store.state.email)[0];
+      if(data) {
+        if(localStorage.getItem('EmailSession')) {
+          return data.sessions.filter(i => i.id == localStorage.getItem('EmailSession'))[0];
+        }else {
+          return data.sessions.filter(i => i.id == 'new')[0];
         }
-        return data.sessions.filter(i => i.id == 'new')[0];
       }
     },
   },
